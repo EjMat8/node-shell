@@ -1,5 +1,5 @@
-const output = () => {
-  process.stdout.write(`${process.cwd()}\n`);
+const output = (done) => {
+  done(`${process.cwd()}\n`);
 };
 
 module.exports = output;

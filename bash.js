@@ -1,21 +1,32 @@
 const pwd = require("./pwd.js");
 const ls = require("./ls.js");
 const cat = require("./cat.js");
+const curl = require("./curl.js");
 
 process.stdout.write("prompt>");
 
 process.stdin.on("data", (data) => {
   const cmd = data.toString().trim();
   if (cmd === "pwd") {
-    pwd();
+    pwd(done);
   }
   if (cmd === "ls") {
-    ls();
+    ls(done);
   }
   if (cmd.startsWith("cat")) {
-    cat(cmd.split(" ")[1]);
-  } else {
-    process.stdout.write(`You typed ${cmd}c\n`);
+    cat(done, cmd.split(" ")[1]);
   }
-  process.stdout.write("prompt>");
+  if (cmd.startsWith("curl")) {
+    curl(done, cmd.split(" ")[1]);
+  }
+  else {
+    process.stdout.write(`You typed ${cmd}\n`);
+  }
 });
+
+function done (output){
+  process.stdout.write(output)
+  process.stdout.write("prompt>")
+}
+
+module.exports = done
